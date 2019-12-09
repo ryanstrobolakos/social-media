@@ -1,4 +1,4 @@
-package com.techtalentsouth.SocialMedia.configuration;
+package com.techtalentsouth.SocialMedia.controller;
 
 import javax.validation.Valid;
 
