@@ -1,5 +1,6 @@
 package com.techtalentsouth.SocialMedia.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,23 @@ public class UserController {
     	    model.addAttribute("tweetList", tweets);
     	    model.addAttribute("user", user);
     	    return "user";
+    }
+    
+    @GetMapping(value = "/users")
+    public String getUsers(Model model) {
+        List<User> users = userService.findAll();
+        model.addAttribute("users", users);
+        SetTweetCounts(users, model);
+        return "users";
+    }
+    
+    private void SetTweetCounts(List<User> users, Model model) {
+        HashMap<String,Integer> tweetCounts = new HashMap<>();
+        for (User user : users) {
+            List<Tweet> tweets = tweetService.findAllByUser(user);
+            tweetCounts.put(user.getUsername(), tweets.size());
+        }
+        model.addAttribute("tweetCounts", tweetCounts);
     }
 
 }
